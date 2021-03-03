@@ -1,0 +1,133 @@
+debug: false
+
+spring:
+  datasource:
+    #   数据源基本配置
+    username: ygsy
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://586f85cf61241.sh.cdb.myqcloud.com:3759/ygsy?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource
+    # initialization-mode: ALWAYS
+    #   Druid数据源配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+  #    schema:
+  #      - classpath:sql/department.sql
+  #      - classpath:sql/employee.sql
+
+  #   热部署
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
+
+  thymeleaf:
+    cache: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false
+
+  # 需要特殊处理的国家代码
+  sms:
+    special_country: +64,+81,+886
+
+  servlet:
+    multipart:
+      # 上传文件总的最大值
+      max-request-size: 100MB
+      # 单个文件的最大值
+      max-file-size: 100MB
+
+
+  #redis
+  # Redis服务器地址
+  redis:
+    host: 172.81.216.86
+    # Redis服务器连接端口
+    port: 6379
+    # 连接超时时间（毫秒）
+    timeout: 0
+    password: Hbt8aZT9zhTwQLs7
+    database: 2
+    # 连接池中的最大空闲连接
+    pool:
+      max-idle: 8
+      # 连接池中的最小空闲连接
+      min-idle: 0
+      # 连接池最大连接数（使用负值表示没有限制）
+      max-active: 8
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+
+  cmtt-session:
+    # session 过期时间，单位为分钟,30天
+    session_expire_time: 43200
+    # session 刷新时间，单位为分钟，25天
+    session_refresh_time: 36000
+
+
+#  # 安全框架
+#  springsecurity:
+#    headertoken: Access-Token
+
+# 静态文件地址
+  static-file:
+    domain-path: https://littlebird-cos-1304137331.file.myqcloud.com/
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+
+
+
+mybatis-plus:
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件位置
+  mapper-locations: classpath*:mapper/**/*.xml
+  # spring boot集成mybatis的方式打印sql
+
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
+logging:
+  level:
+    com.cmtt.base.mapper: debug
+
+common:
+  noauto: /actuator/health,/api/sys_mini_program/code2Session,/api/sys_mini_program/decrypt,/api/sys_mini_program/update_user,/favicon.ico,/api/auth/login,/api/db_doc,/api/sys_sms_country/list_all,/api/sys_user/register,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/druid/**,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/base/article/list,/api/base/ss-banner-info/list,/api/base/ss-customer-info,/api/base/ss-customer-address,/api/base/ss-goods-info/goodsDetail.app,/api/base/ss-water-ticket/list,/api/base/ss-customer-ticket/list,/api/base/ss-customer-ticket/listAll,/api/base/ss-goods-info/lastGoodsDetail.app,/api/base/ss-goods-info/goodsList.app,/api/base/ss-customer-address/getAddressList.app,/api/base/ss-banner-info/bannerList.app,/api/base/ss-order-location/list.app,/api/base/ss-order-location/add.app,/api/base/ss-clockin-info/list.app,/api/base/ss-clockin-info/add.app,/api/base/ss-waterstation-order-info/listAll,/api/base/ss-delivery-man/manlist.app,/api/base/ss-delivery-man/add,/api/base/ss-delivery-man/edit,/api/base/ss-delivery-man/delete,/api/base/ss-order-delivery/add,/api/base/ss-order-delivery/delivery,/api/base/ss-order-delivery/finish,/api/base/ss-order-info/saveAllOrderInfoReturnOrderNum.app
+
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  pageSizeZero: false #pageSize=0
+
+address.farthest.distance: 10   #用户地址可以匹配的最远水站距离，单位：公里
+
